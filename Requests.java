@@ -3,102 +3,71 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is for design the request JPanel that includes 3 part
+ * one for label twe a JButton to add new request three a JPanel
+ * that save all the requests
+ */
 public class Requests {
+
+    private JPanel requests;
     private JPanel req;
-    private int counter= 1;
 
-    public JPanel rquest(){
-        JPanel requests = new JPanel();
-        requests.setBackground(new Color(80, 130, 180));
-        requests.setLayout(new GridBagLayout());
-        GridBagConstraints gbl = new GridBagConstraints();
-        gbl.fill = GridBagConstraints.HORIZONTAL;
-
-
+    /**
+     * we use this method to create a label and add it to north of JPanel
+     * and create a new JPanel to save all te requests and add it in center
+     * and a JButton that we can add a new constrain in JPanel
+     * @return JPanel request that we can add it to the JFrame
+     */
+    public JPanel request(){
+        requests = new JPanel(new BorderLayout(0,0));
         JLabel lable = new JLabel("Graphical User Interface");
         lable.setBackground(new Color(70, 30, 200));
-        lable.setForeground(Color.white);
         lable.setFont(new Font("Serif", Font.BOLD, 30));
         lable.setHorizontalAlignment(SwingConstants.CENTER);
         lable.setOpaque(true);
-//        gbl.weighty = 1.0;
-//        gbl.gridx =0;
-//        gbl.gridy =0;
-        gbl.ipady = 50;
-        gbl.weightx =3;
-//        gbl.anchor = GridBagConstraints.FIRST_LINE_START;
-        requests.add(lable, gbl);
+        int hight = lable.getPreferredSize().height +20;
+        lable.setPreferredSize(new Dimension(lable.getPreferredSize().width, hight));
 
-
-
-        req = new JPanel();
-        req.setBackground(new Color(80, 130, 180));
-        req.setLayout(new GridBagLayout());
-        gbl.gridx =0;
-        gbl.gridy =2;
-//        gbl.ipady = 500;
-        requests.add(req, gbl);
+        req = new JPanel(new BorderLayout(0,0));
 
         JButton create = new JButton("Create a new request");
-        create.setBackground(new Color(70, 30, 200));
-        create.setHorizontalAlignment(SwingConstants.CENTER);
-        create.setOpaque(true);
-        create.setFocusable(true);
-        gbl.gridx =0;
-        gbl.gridy =1;
-        gbl.ipady = 15;
-        gbl.weightx =3;
-        requests.add(create, gbl);
-
-        builtRequest("hjas");
-        builtRequest("djahk");
-        builtRequest("dwrg");
-        builtRequest("drgerk");
-
-        create.addActionListener(new ActionListener() {
+        create.addActionListener(new ActionListener()   {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                addNewHeader();
-////                builtRequest("httpbin GET");
-//                JButton built = new JButton();
-////                JButton built = (JButton) e.getSource();
-////                builtRequest(built);
-//                built.setText("dfjzef");
-//                built.setBackground(new Color(160, 110, 200));
-//                built.setOpaque(true);
-//                built.setFont(new Font("Arial", Font.PLAIN, 20));
-//                built.setLayout(new GridBagLayout());
-//                GridBagConstraints gbl = new GridBagConstraints();
-//                gbl.fill = GridBagConstraints.HORIZONTAL;
-//
-//                gbl.gridy = counter++;
-//                gbl.weightx = 15;
-//                gbl.ipady = 15;
-//                req.add(built, gbl);
+                String name ;
+                name = JOptionPane.showInputDialog("The name of your new request");
+                builtRequest(name);
             }
         });
 
+        req.setBackground(new Color(80, 130, 180));
+        create.setBackground(new Color(70, 30, 200));
+
+        req.add(create, BorderLayout.NORTH);
+        requests.add(lable, BorderLayout.NORTH);
+        requests.add(req, BorderLayout.CENTER);
+
+        builtRequest("httpbin GET");
+        builtRequest("POST from data");
         return requests;
 
     }
 
-    public void builtRequest(String name){
+    /**
+     * we use this method to add a new request to JPanel and save it
+     * @param name that we got from input to save the request by it name
+     */
+    private void builtRequest(String name){
+        System.out.println(name);
+        req.setLayout(new GridLayout(15, 1));
         JButton built = new JButton(name);
         built.setBackground(new Color(160, 110, 200));
+//        built.setPreferredSize(new Dimension(built.getPreferredSize().width+30 , built.getPreferredSize().height+10));
         built.setOpaque(true);
         built.setFont(new Font("Arial", Font.PLAIN, 20));
-        built.setLayout(new GridBagLayout());
-        GridBagConstraints gbl = new GridBagConstraints();
-        gbl.fill = GridBagConstraints.HORIZONTAL;
-
-        gbl.gridy = counter++;
-        gbl.weightx = 15;
-        gbl.ipady = 18;
-        req.add(built, gbl);
+        req.add(built);
 
     }
-
-
-
 
 }
